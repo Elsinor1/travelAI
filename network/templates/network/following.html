@@ -1,0 +1,75 @@
+{% extends "network/layout.html" %}
+
+{% block body %}
+
+    <!-- PAGINATION NAVIGATION -->
+    <div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+    </div>
+
+    <!-- POSTS -->
+    {% for post in page_obj %}
+        <div class="post-container" id="post_{{post.id}}">
+            <div class="post-header d-flex justify-content-between align-items-center">
+                <h4><a href= "{% url 'display_user' user_id=post.author.id %}">{{ post.author.username }}</a></h4>
+                <h5>{{ post.date }}</h5>
+
+                <div class="like-container d-flex align-items-center">
+                    <h5>Likes:</h5>
+                    <h5 class="likes" id="likes_{{ post.id }}">{{ post.likes.count }}</h5>
+                    {% if request.user.is_authenticated and request.user != post.author %}
+                        <button class="like-button btn btn-secondary" id="like_button_{{ post.id }}">
+                            {% if post in liked_post_query %}
+                                Unlike
+                                <i class="fa fa-thumbs-down"></i>
+                            {% else %}
+                                Like
+                                <i class="fa fa-thumbs-up"></i>
+                            {% endif %}
+                        </button>
+                    {% endif %}
+
+                    {% if post.author == request.user %}
+                        <button class="edit-post btn btn-secondary" id="edit_button_{{ post.id }}">Edit Post</button>
+                    {% endif %}
+                </div>
+
+
+            </div>
+            <p class="post-text">{{ post.text }}</p>
+        </div>
+    {% endfor %}
+
+    <!-- PAGINATION NAVIGATION -->
+    <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1">&laquo; first</a>
+                <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+            </span>
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">next</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+{% endblock %}
