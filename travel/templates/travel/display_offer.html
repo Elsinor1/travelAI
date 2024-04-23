@@ -1,0 +1,133 @@
+{% extends 'travel/layout.html' %} {% load static %} {% block head %}
+<script>
+	{% comment %} const travelProfiles = {{ travel_profiles_json|safe }}; {% endcomment %}
+	{% comment %} console.log("Raw JSON:", travelProfilesJson);
+	const travelProfiles = JSON.parse(travelProfilesJson); {% endcomment %}
+	{% comment %} console.log("Parsed JSON:", travelProfiles); {% endcomment %}
+</script>
+<script src="{% static 'travel/travelOffers.js' %}"></script>
+{% endblock %} {% block body %}  
+    {% comment %} Itinerary {% endcomment %}
+    <div id="itinerary">
+        <h1>{{ offer.itinerary.Label }}</h1>
+        <h6>{{offer.itinerary.Description}}</h6>
+        <div class="itinerary-days">
+            {% for day_key, day in offer.itinerary.Days.items %}
+                <div class="itinerary-day">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h4>Day {{ forloop.counter }}</h4>
+                            <ul>
+                                {% for activity in day.Activities %}
+                                    <li>
+                                        <h5>{{ activity.Name }}</h5>
+                                        <div class="d-flex justify-content-between">
+                                            <p> {{ activity.Description }}</p>
+                                            {% if activity.Entrance_fee %}
+                                            <p class="">Entrance Fee: {{ activity.Entrance_fee }}</p>
+                                            {% endif %}
+                                            {% if activity.Price_range %}
+                                            <p><strong>Price Range: </strong>{{ activity.Price_range }}</p>
+                                            {% endif %}
+                                        </div>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                            <p><strong>Funny Tip: </strong>{{ day.Funny_tip }}</p>
+                        </div>
+                        <div class="itinerary-image col-md-4">
+                            {% for image in offer.image.all %}
+                                {% if forloop.counter0 == forloop.parentloop.counter0 %}
+                                    <img src="{{ image.url }}" class="" alt="{{ image.name }}">
+                                {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>  
+        </div>
+    
+        {% comment %} Flight routes {% endcomment %}
+        <div id="flight-routes" class="d-flex">
+            <div class="table-responsive m-2 p-2">
+                <h3>Departure</h3>
+                <table class="flight-routes-table table table-primary">
+                    <thead>
+                        <tr>
+                            <th scope="col">Airport</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Arrival</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Flight transfers</th>
+                            <th scope="col">Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for route in offer.departure_routes.all %}
+                        <tr class="">
+                            <td>{{route.origin.label}}</td>
+                            <td>{{route.departure_date}}</td>
+                            <td>{{route.destination.label}}</td>
+                            <td>{{route.arrival_date}}</td>
+                            <td>
+                                <ul >
+                                    {% for flight in route.flights.all %}
+                                        <li class="d-flex">
+                                            <img class="carrier-logo" src="{{ flight.carrier.logo }}" alt="{{ flight.carrier.name }} logo">
+                                            <div>
+                                                {{ flight.origin.iata_code }} to {{ flight.destination.iata_code }}
+                                            </div>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </td>
+                            <td scope="row">${{ route.price }}</td>
+                        </tr>                 
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="table-responsive m-2 p-2">
+                <h3>Return</h3>
+                <table class="flight-routes-table table table-primary">
+                    <thead>
+                        <tr>
+                            <th scope="col">Departure</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Arrival</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Flights</th>
+                            <th scope="col">Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for route in offer.return_routes.all %}
+                        <tr class="">
+                            <td>{{route.origin.label}}</td>
+                            <td>{{route.departure_date}}</td>
+                            <td>{{route.destination.label}}</td>
+                            <td>{{route.arrival_date}}</td>
+                            <td>
+                                <ul>
+                                    {% for flight in route.flights.all %}
+                                    <li class="d-flex">
+                                        <img class="carrier-logo" src="{{ flight.carrier.logo }}" alt="{{ flight.carrier.name }} logo">
+                                        <div>
+                                            {{ flight.origin.iata_code }} to {{ flight.destination.iata_code }}
+                                        </div>
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                            </td>
+                            <td scope="row">${{ route.price }}</td>
+                        </tr>                 
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

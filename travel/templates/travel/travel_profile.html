@@ -1,0 +1,160 @@
+{% extends 'travel/layout.html' %} {% load static %} {% block head %}
+ <script>
+    // Saving JSON data into JavaScript variable
+    var travelProfilesJSON = {{ profiles_json|safe }};
+	console.log(travelProfilesJSON);
+</script> 
+<script src="{% static 'travel/travelForm.js' %}"></script>
+{% endblock %} 
+
+{% block body %}
+	<form
+	class=""
+	id="travelProfileForm"
+	action=""
+	method="post"
+	>
+	{% csrf_token %}
+
+		<!-- One "tab" for each step in the form: -->
+		<!-- NEW PROFILE OR EDIT -->	  
+		<div class="tab">
+			<div id="new_or_edit" class="d-flex justify-content-around ">
+				<div class="profile-choice-background profile-background-orange">
+					<button name="new_profile" id="new-profile-button"type="button" class="btn-primary btn-profile btn-blue">Create new profile</button>
+				</div>
+				<div class="profile-choice-background profile-background-yellow">
+					{% if profiles %}
+					<button name="edit_profile" id="edit-profile-button" type="button" class="button btn-primary btn-profile" >Edit profile</button>
+					<div>
+						<h5>Select profile</h5>
+						<select class="form-select" id="travelProfileSelect" name="travelProfileSelect">
+							{% for profile in profiles %}
+							<option value="{{ profile.id }}">{{ profile.description }}</option>
+							{% endfor %}
+						</select>
+						{% endif %}
+					</div>
+				</div>
+				<input type="hidden" name="travelProfileId" value="" id="travelProfileId">
+			</div>
+		</div>
+
+		<div class="tab">
+			<h3>Preferences:</h3>
+			<div class="d-flex flex-column justify-content-around ">
+				<div>
+					<label for="adultAmount" class="form-label">Adults</label>
+					<input
+					type="number"
+					class=""
+					id="adultAmount"
+					min="1"
+					value="1"
+					name="adultAmount"
+					/>
+				</div>
+				<div>
+					<label for="childrenAmount" class="form-label">Children</label>
+					<input
+					type="number"
+					class=""
+					id="childrenAmount"
+					min="0"
+					name="childrenAmount"
+					value="0"
+					/>
+				</div>
+				<div>
+					<label for="activityPreference" class="form-label">How active you want to be?</label>
+					<select class="form-select" id="activityPreference" name="activityPreference" >
+						<option value="" disabled></option>
+						{% for type in activity_preferences %}
+						<option data-id="{{ type.id }}" value="{{ type.name }}">
+							{{ type.name }}
+						</option>
+						{% endfor %}
+					</select>
+				</div>
+				<div>
+					<label for="diningPreference" class="form-label">Select your dining preference?</label>
+					<select class="form-select" id="diningPreference" name="diningPreference" >
+						<option value="" disabled></option>
+						{% for type in dining_preferences %}
+						<option data-id="{{ type.id }}" value="{{ type.name }}">
+							{{ type.name }}
+						</option>
+						{% endfor %}
+					</select>
+				</div>
+			</div>
+			</div>
+			
+		<div class="tab">
+			<div class="d-flex flex-column justify-content-around ">
+				<label class="" for="vacationType">Select desired vacation type</label>
+				<select class="form-select" id="vacationType" name="vacationType" multiple>
+					{% for type in vacation_types %}
+					<option data-id="{{ type.id }}" value="{{ type.name }}">
+						{{ type.name }}
+					</option>
+					{% endfor %}
+				</select>
+			</div>
+		</div>
+
+		<div class="tab">
+			<div class="d-flex flex-column justify-content-around ">
+				<label class="" for="locationInput">Your location</label>
+				<input
+				type="text"
+				id="locationInput"
+				name="location"
+				placeholder="Nearest town or city"
+				/>
+				<input type="hidden" id="longitude" name="longitude" value="" />
+				<input type="hidden" id="latitude" name="latitude" value="" />
+				<div id="suggestions-dropdown" class="suggestions-dropdown">
+					
+				</div>
+				<button id="find-airports-button" class="button btn-blue btn-profile" type="button">Find airports</button>
+				
+				<label class="" for="airportSelect">Preferred airports</label>
+				<select
+				class="form-select"
+				id="airportSelect"
+				name="airportSelect"
+				multiple
+				>
+					<option disabled>Select preferred airports</option>
+				</select>
+			</div>
+		</div>
+		
+		{% comment %} Loading animation {% endcomment %}
+		<div id="loaderSection">
+			<div class="d-flex flex-column justify-center align-middle text-center">
+				<div>
+					<h3>Saving profile</h3>
+				</div>
+				<div class="loader" style=""></div>
+			</div>
+		</div>
+
+		{% comment %} Navigation buttons {% endcomment %}
+		<div style="overflow:auto;">
+			<div style="float:right;">
+				<button type="button" class='btn-primary btn-profile btn-blue' id="prevBtn" onclick="nextPrev(-1)">Previous</button>
+				<button type="button" class='btn-primary btn-profile btn-blue' id="nextBtn" onclick="nextPrev(1)">Next</button>
+			</div>
+		</div>
+
+		<!-- Circles which indicates the steps of the form: -->
+		<div style="text-align:center;margin-top:40px;">
+			<span class="step"></span>
+			<span class="step"></span>
+			<span class="step"></span>
+			<span class="step"></span>
+		</div>
+	</form>
+{% endblock %}

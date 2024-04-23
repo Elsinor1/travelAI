@@ -1,0 +1,490 @@
+#avivi-logo {
+  border-image-width: 10px;
+}
+
+:root {
+  --primary-color: #007bff;
+  --grey: rgba(255, 255, 255, 0.884);
+  --border-color: #c4c4c4;
+  --accent-color: #28a745;
+  --blue: #0066cc;
+  --green: #33cc33;
+  --orange: #ff9933;
+  --purple: #9933cc;
+  --red: #ff3333;
+  --light-green: #87bd94;
+  --white: white;
+  --light-orange: rgb(253, 216, 148);
+  --light-orange-2: rgb(250, 202, 113);
+  --dark-orange: orange;
+  --light-yellow: rgb(245, 245, 148);
+  --light-yellow-2: rgb(245, 245, 127);
+  --dark-yellow: rgb(255, 251, 0);
+
+  --logo-font: "Handlee", Impact, "Haettenschweiler", "Arial Narrow Bold",
+    sans-serif;
+  --nav-font: "SF Pro", Helvetica, "Helvetica Neue", "Arial", "sans-serif";
+  --general-font: " Circular Pro", "San Francisco ", " Segoe UI ",
+    " Helvetica Neue ", " Lucida Grande" ", sans-serif";
+  --bs-body-font-family: var(--nav-font);
+}
+
+body {
+  background-color: #fff;
+  /* width: 80%; */
+  margin: auto;
+  padding: 10%;
+  box-sizing: border-box;
+  border-width: 5px;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  min-height: 100vh;
+  flex-direction: column;
+  align-content: flex-start;
+  font-family: var(--general_font);
+}
+
+#header {
+  width: 80%;
+}
+
+.navbar-light {
+  border-width: 5px;
+  border-color: var(--primary-color);
+}
+
+.navbar-light .navbar-nav .nav-link {
+  color: var(--border-color);
+}
+
+.navbar-nav {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-item {
+  display: inline-block;
+}
+
+.content {
+  padding: 20px;
+  margin-top: 20px;
+  width: 80vw;
+}
+
+a.logo-1 {
+  padding: 0;
+  margin: 0;
+  font-family: var(--logo-font);
+}
+
+.nav-font {
+  font-family: var(--nav-font);
+  font-weight: bold;
+}
+
+h1.navbar-brand {
+  margin: 0;
+}
+
+h1.logo-1 {
+  font-size: 3rem;
+  padding: 0;
+  margin: 0;
+  margin-block-end: 0;
+  margin-bottom: 0;
+}
+
+/* Apply colors to individual letters */
+h1 span:nth-child(1) {
+  color: var(--blue);
+}
+
+h1 span:nth-child(2) {
+  color: var(--green);
+}
+
+h1 span:nth-child(3) {
+  color: var(--orange);
+}
+
+h1 span:nth-child(4) {
+  color: var(--purple);
+}
+
+h1 span:nth-child(5) {
+  color: var(--red);
+}
+
+.logo-2 {
+  font-family: "Slackside One", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.btn-profile {
+  border-radius: 20px;
+  padding: 5px 10px;
+  font-weight: bold;
+  transition: box-shadow 0.3s ease;
+}
+
+.btn-profile:hover,
+.btn-profile:hover a {
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.btn-profile:hover a {
+  color: inherit;
+}
+
+.btn-blue {
+  background-color: var(--blue);
+  color: white;
+}
+
+.btn-profile a {
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+  color: inherit;
+}
+
+.btn-white {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+#avivi-logo {
+  width: 5rem;
+}
+
+.profile-name {
+  text-decoration: none;
+}
+
+.carousel-image {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+}
+
+.carousel-inner {
+  height: 300px;
+}
+
+.offer-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-content: space-around;
+  align-items: stretch;
+
+  background-color: var(--grey);
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.offer-title {
+  color: var(--accent-color);
+  font-weight: bold;
+  font-family: var(--font-nav);
+  text-decoration: none;
+}
+
+.offer-description {
+  color: #333;
+}
+
+.offer-route {
+  font-style: italic;
+}
+
+.offer-price {
+  color: var(--green);
+  font-weight: bold;
+}
+
+.offer-details a {
+  text-decoration: none;
+}
+
+@media (max-width: 991.98px) {
+  /* Apply styles for screens smaller than lg breakpoint */
+  #header {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .navbar-toggler {
+    margin-top: 10px; /* Adjust spacing between the main logo and the collapse button */
+  }
+
+  .navbar-toggler {
+    align-self: center;
+    align-items: center;
+  }
+
+  .navbar-collapse.show {
+    display: flex;
+    justify-content: center;
+  }
+
+  .navbar-collapse.show {
+    display: flex;
+    justify-content: center;
+  }
+
+  .navbar-toggler {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .navbar {
+    width: 100%;
+  }
+
+  .content {
+    padding: 20px;
+    margin-top: 20px;
+    width: 95vw;
+  }
+}
+
+/* Display offer */
+.day-info {
+  padding-left: 20px;
+  margin-bottom: 30px;
+}
+.day-image {
+  float: right;
+  margin-left: 20px;
+  max-width: 300px;
+  height: auto;
+}
+.flight-info {
+  margin-bottom: 30px;
+}
+
+.itinerary-day h4,
+.itinerary-day h5,
+.itinerary-day p {
+  margin: 0;
+  margin-block-end: 0;
+}
+
+.itinerary-day h4 {
+  margin-bottom: 10px;
+}
+
+.itinerary-day {
+  border-color: var(--border-color);
+  border-style: solid;
+  border-width: 1px 0 0 0;
+
+  margin: 0px 0 0px 0;
+  padding: 10px;
+}
+
+.itinerary-days {
+  padding: 0px 0 10px 0;
+}
+
+.itinerary-days:last-child {
+  border-color: var(--border-color);
+  border-style: solid;
+  border-width: 0px 0 1px 0px;
+
+  margin: 20px 0 0px 0;
+  padding: 10px;
+}
+
+.itinerary-image img {
+  width: 100%;
+  height: 350px;
+  object-fit: cover;
+}
+
+#flight-routes td {
+  background-color: var(--white);
+}
+
+#flight-routes th {
+  background-color: var(--border-color);
+}
+
+.itinerary-day li {
+  padding: 5px 0 5px 0;
+}
+
+.itinerary-day p {
+  margin-right: 20px;
+}
+
+.carrier-logo {
+  height: 2.5em;
+}
+
+.flight-routes-table ul {
+  margin-bottom: 0px;
+}
+
+/*  */
+/* TRAVEL FORM */
+
+/* Hide all steps by default: */
+.tab {
+  display: none;
+  height: 60vh;
+}
+
+.profile-choice-background {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.profile-choice-background button {
+  width: 50%;
+  border-radius: 20px;
+  padding: 5px 10px;
+  font-weight: bold;
+  transition: box-shadow 0.3s ease;
+
+  margin: 10px;
+  padding: 5px;
+}
+
+.profile-choice-background button:hover {
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.profile-background-yellow button {
+  background-color: var(--dark-yellow);
+}
+
+.profile-background-orange button {
+  background-color: var(--dark-orange);
+}
+
+.profile-choice-background select {
+  background-color: inherit;
+}
+
+.btn-profile:hover a {
+  color: inherit;
+}
+
+/* Make circles that indicate the steps of the form: */
+.step {
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #bbbbbb;
+  border: none;
+  border-radius: 50%;
+  display: inline-block;
+  opacity: 0.5;
+}
+
+/* Mark the active step: */
+.step.active {
+  opacity: 1;
+}
+
+/* Mark the steps that are finished and valid: */
+.step.finish {
+  background-color: #04aa6d;
+}
+
+.custom-offer-container {
+  padding: 10px;
+  margin: 10px;
+  /* height: 20rem; */
+
+  border: 2px solid var(--grey);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#find-airports-button {
+  width: 10rem;
+  padding: 10px;
+  margin: 10px;
+}
+/* LOADING ANIMATION */
+
+#loaderSection {
+  display: none;
+  height: 50vh;
+}
+
+.loader {
+  border: 8px solid var(--light-orange-2);
+  border-top: 8px solid var(--light-yellow);
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  animation: spin 1s linear infinite, changeColorTop 8s linear infinite;
+  margin: 20px auto;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes changeColorTop {
+  0% {
+    border-top-color: var(--accent-color);
+    border-right-color: var(--blue);
+    border-bottom-color: var(--green);
+    border-left-color: var(--orange);
+  }
+  25% {
+    border-top-color: var(--orange);
+    border-right-color: var(--accent-color);
+    border-bottom-color: var(--blue);
+    border-left-color: var(--green);
+  }
+  50% {
+    border-top-color: var(--green);
+    border-right-color: var(--orange);
+    border-bottom-color: var(--accent-color);
+    border-left-color: var(--blue);
+  }
+  75% {
+    border-top-color: var(--blue);
+    border-right-color: var(--green);
+    border-bottom-color: var(--orange);
+    border-left-color: var(--accent-color);
+  }
+  100% {
+    border-top-color: var(--accent-color);
+    border-right-color: var(--blue);
+    border-bottom-color: var(--green);
+    border-left-color: var(--orange);
+  }
+}
+
+.generate-offer-container {
+  padding: 20px;
+  margin: 10px;
+  height: 20rem;
+  border: 1px solid var(--border-color);
+
+  display: flex;
+  flex-direction: column;
+  vertical-align: middle;
+  align-items: center;
+  justify-content: center;
+}

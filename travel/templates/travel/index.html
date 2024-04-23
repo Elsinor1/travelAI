@@ -1,0 +1,121 @@
+{% extends 'travel/layout.html' %} {% block head %} {% endblock %} 
+{% block body %}
+
+<div id="index-content">
+  <div>
+    {% if user.is_authenticated %} {% else %}
+    <h6 class="container offer-container">
+      Tip: Log in to generate custom offers
+    </h6>
+    {% endif %}
+  </div>
+
+  {% comment %} Pagination {% endcomment %}
+  <div class="pagination">
+    <span class="step-links">
+      {% if offers.has_previous %}
+      <a href="?page=1">&laquo; first</a>
+      <a href="?page={{ offers.previous_page_number }}">previous</a>
+      {% endif %}
+
+      <span class="current">
+        Page {{ offers.number }} of {{ offers.paginator.num_pages }}.
+      </span>
+
+      {% if offers.has_next %}
+      <a href="?page={{ offers.next_page_number }}">next</a>
+      <a href="?page={{ offers.paginator.num_pages }}">last &raquo;</a>
+      {% endif %}
+    </span>
+  </div>
+
+  <div id="offer-list">
+    {% if offers %} {% for offer in offers %}
+    <div class="custom-offer-container" data-id="{{ offer.id }}">
+      <div class="row">
+        <div class="col-md-7">
+          <div class="offer-details">
+            <a href="/display_offer/{{offer.id}}">
+              <h3 class="offer-title">{{offer.itinerary.Label}}</h3>
+            </a>
+            <p class="offer-description">{{offer.itinerary.Description}}</p>
+            <p class="offer-route">
+              From: {{offer.origin_airport.city}} To:
+              {{offer.destination_airport.city}}
+            </p>
+            <p class="offer-price">
+              Flight tickets
+              ~{{offer.departure_routes.all.0.price|add:offer.return_routes.all.0.price}}$
+            </p>
+          </div>
+        </div>
+        <div class="col-md-5">
+          <div
+            id="carousel{{ offer.id }}"
+            class="carousel slide"
+            data-bs-ride="carousel"
+          >
+            <div class="carousel-inner">
+              {% for image in offer.image.all %}
+              <div
+                class="carousel-item {% if forloop.first %}active{% endif %}"
+              >
+                <img
+                  src="{{ image.url }}"
+                  class="d-block carousel-image"
+                  alt="{{ image.name }}"
+                />
+              </div>
+              {% endfor %}
+            </div>
+            <button
+              class="carousel-control-prev"
+              type="button"
+              data-bs-target="#carousel{{ offer.id }}"
+              data-bs-slide="prev"
+            >
+              <span
+                class="carousel-control-prev-icon"
+                aria-hidden="true"
+              ></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button
+              class="carousel-control-next"
+              type="button"
+              data-bs-target="#carousel{{ offer.id }}"
+              data-bs-slide="next"
+            >
+              <span
+                class="carousel-control-next-icon"
+                aria-hidden="true"
+              ></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %} {% endif %}
+  </div>
+
+  {% comment %} Pagination {% endcomment %}
+  <div class="pagination">
+    <span class="step-links">
+      {% if offers.has_previous %}
+      <a href="?page=1">&laquo; first</a>
+      <a href="?page={{ offers.previous_page_number }}">previous</a>
+      {% endif %}
+
+      <span class="current">
+        Page {{ offers.number }} of {{ offers.paginator.num_pages }}.
+      </span>
+
+      {% if offers.has_next %}
+      <a href="?page={{ offers.next_page_number }}">next</a>
+      <a href="?page={{ offers.paginator.num_pages }}">last &raquo;</a>
+      {% endif %}
+    </span>
+  </div>
+</div>
+{% endblock %}
