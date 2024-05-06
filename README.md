@@ -4,19 +4,80 @@
 
 ## Description
 
-**Avivi** is a web application that generates travel offers tailored to users' preferences. After completing a user's travel profile form, the application creates custom travel offers that fit the user's preferences, including recommending suitable destinations. Avivi connects to the _Amadeus API_ to fetch real-time flight offers with prices and availability. It also recommends a three-day itinerary, which includes sightseeing, activities, and dining recommendations generated using the _ChatGPT API_. Itinerary is complemented with beatiful images retrieved from Trip advisot API. All retrieved or generated data is stored in Django ORM models using an _SQLite_ database.
+**Avivi** is a web application that generates travel offers tailored to users' preferences. After completing a user's travel profile form, the application creates custom travel offers that fit the user's preferences, including recommending suitable destinations. Avivi connects to the _Amadeus API_ to fetch real-time flight offers with prices and availability. It also recommends a three-day itinerary, which includes sightseeing, activities, and dining recommendations generated using the _ChatGPT API_. Itinerary is complemented with beautiful images retrieved from the _Trip Advisor API_. All retrieved or generated data is stored in Django ORM models using an _SQLite_ database.
 
 ### Distinctiveness and Complexity
 
-Avivi is unique due to it's usage of data from external API's, it connects to Amadeus, ChatGPT and Trip Advisor. Processing real time data it creates travel offer "on spot". Application is written on more that 1500 lines of custom code. It has 22 custom django ORM models.
+Avivi is unique due to its usage of data from external APIs., it connects to Amadeus, ChatGPT and Trip Advisor. Processing real time data it creates travel offer "on spot". The application is written with more than 1500 lines of custom code. It has 22 custom django ORM models.
 
-#### Note: In order to run this application you need to setup enviroment variable for Amadeus API. You can use my test setup:
+#### How to run the application:
+
+In order to run this application you need to setup the environment variable for Amadeus API. You can use my test setup:
 
 AMADEUS_CLIENT_ID=SGVrXP6enprnQv4OU8K9mgo0EVUKMmzs
 
 AMADEUS_CLIENT_SECRET=O4DORD8RgfrTkCP5
 
+Furthermore it is necessary to use my sqlite DB for autocomplete to work properly.
+
 ### Application contents
+
+#### travel/models.py
+
+22 custom django ORM models, storing information about locations and user travel preferences.
+
+#### travel/serializers.py
+
+11 serializers for query data serialization used in API views
+
+#### travel/tests.py
+
+Includes integration tests for APIs:
+
+- test_get_trip_adv_location_id, test_get_image - tests connection to Trip Advisor API
+- test_get_suitability_from_ai - tests connection to ChatGPT API
+- test_get_destinations_from_api_integration - tests connection to Amadeus API
+
+#### travel/utils/AI_helpers.py
+
+Includes helper functions connecting to ChatGPT API.
+
+- get_itinerary - For given parameters generate a string of itinerary for each day. Returns a string of itinerary data in a JSON format.
+- get_suitability_from_ai - Values how given location is suitable for given vacation type. Returns an 1-10 int.
+- correct_json - Corrects json format if the format is incorrect. For example when dash or semicolon is missing.
+
+#### travel/utils/helpers.py
+
+Contains core helper functions used for data query, creation and manipulation. Among the most important belong these functions:
+
+- get_matches - Returns 5 cities that begins with given string, ordered by biggest population. Used for autocompletion of location input.
+- get_travel_offer - For given travel profile, gets the destination from Possible_destinations and returns Travel offer. Destination_id parameter is arbitrary; if not given, next unused destination will be used.
+- get_flight_routes - Gets a list of flight routes for given flight data using Amadeus API. A flight route is composed of individual flights, if the flight offer has multiple stops.
+
+#### travel/helpers/recievers.py
+
+Recievers are used when travel_profile or airport models are created or updated. They trigger actions after each save. I used recievers instead of overwriting the safe methods to avoid circular references.
+
+- save_travel_profile_receiver - Reciever for travel profile save, when saved sets profile destinations
+- save_airport_reciever - Reciever for airport save, when saved sets all suitabilites for vacation types
+
+#### travel/helpers/trip_advisor.py
+
+Contains functions linked to Trip Advisor API. They are used for finding photos fitting to the locations or objects used in a vacation's itinerary.
+
+#### travel/static/travel/customTrip.js
+
+Javascript functions linked to displaying or generating custom offers.
+
+#### travel/static/travel/travelForm.js
+
+Javascript functions linked to the travel profile form.
+
+- AutocompleteModule - Module for autocompletion of location input.
+- NearestAirportsModule - Module for fetching and displaying of nearest airports to location given in travel profile form.
+- other functions for displaying and validating of a travel form.
+
+### Application navigation
 
 #### Index page,
 
@@ -24,14 +85,14 @@ Shows various travel offers made by all users.
 
 ### Your offers
 
-Displays travel offers generated by the user. User can also filted by travel profile. By clicking on "Generate new offer" button user can create new travel offer.
+Displays travel offers generated by the user. User can also filtered by travel profile. By clicking on "Generate new offer" button user can create new travel offer.
 
 ### Display offer
 
-After clicking on offer name in one of the previously mentioned pages, full travel offer is displayed. It includes three day itinerary with reccomendations for activites or dining. Also displayes images describing the offer. On bottom can user see display of flight tickets reccomended for this offer.
+After clicking on offer name in one of the previously mentioned pages, full travel offer is displayed. It includes three day itinerary with recommendations for activities or dining. Also displayes images describing the offer. On bottom can user see display of flight tickets recommended for this offer.
 
 ### Travel profile
 
-After clicking on "Add or edit profiles" on the Your offers page you can access travel profile. Choose between "New" or "Edit" to prefill the form. Fill your preferences and location. When inputing location, confirm it in suggestions dropdown. After confirmation nearest airports are displayed. After completing a profile, you are redirected to "your offers" page.
+After clicking on "Add or edit profiles" on the Your offers page you can access travel profile. Choose between "New" or "Edit" to prefill the form. Fill your preferences and location. When inputting location, confirm it in suggestions dropdown. After confirmation nearest airports are displayed. After completing a profile, you are redirected to "your offers" page.
 
 ### Finally, I would like to extend my heartfelt thanks to Brian Yu from Harvard University for teaching this incredible course. It was a pleasure to complete the course, and I'll always cherish this memorable chapter of my life.

@@ -17,7 +17,7 @@ def get_itinerary(
     duration: int,
 ) -> str:
     """For given parameters generate a string of itinerary for each day.
-    Returns a string of sanitized html tags"""
+    Returns a string in a JSON format"""
 
     prompt_text = """
       You are local guide in {city}, write an itinerary for {duration} day vacation with theme: {vacation_type}. Participants: {adults} adults and {children} children. 
