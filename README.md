@@ -4,11 +4,23 @@
 
 ## Description
 
-**Avivi** is a web application that generates travel offers tailored to users' preferences. After completing a user's travel profile form, the application creates custom travel offers that fit the user's preferences, including recommending suitable destinations. Avivi connects to the _Amadeus API_ to fetch real-time flight offers with prices and availability. It also recommends a three-day itinerary, which includes sightseeing, activities, and dining recommendations generated using the _ChatGPT API_. Itinerary is complemented with beautiful images retrieved from the _Trip Advisor API_. All retrieved or generated data is stored in Django ORM models using an _SQLite_ database.
+**Avivi** is a web application that generates travel offers tailored to users' preferences. After completing a user's travel profile form setting up vacation preferebces and requirements, the application then creates custom travel offers that fit the user's preferences, including recommending suitable destinations.
 
-### Distinctiveness and Complexity
+Avivi connects to the _Amadeus API_ to fetch real-time flight offers with prices and availability. It also recommends a three-day itinerary, which includes sightseeing, activities, and dining recommendations generated using the _ChatGPT API_. Itinerary is complemented with beautiful images retrieved from the _Trip Advisor API_. All retrieved or generated data is stored in Django ORM models using an _SQLite_ database.
 
-Avivi is unique due to its usage of data from external APIs., it connects to Amadeus, ChatGPT and Trip Advisor. Processing real time data it creates travel offer "on spot". The application is written with more than 1500 lines of custom code. It has 22 custom django ORM models.
+## Distinctiveness and Complexity
+
+Avivi is unique due to its integration with external APIs. It connects to the Amadeus, ChatGPT, and Trip Advisor APIs. I utilizes django templates as well as API's used for frontend fetching without reloading the page using vanilla javascript. For APIs django and django rest framework is used. It's complexity exceeds previous projects due to it's scale (more than 1500 lines of code and 22 ORM models) and also utilization of previously unused libraries such as Django Rest Framework, Amadeus, Langchain and pytest.
+
+Key features of the application that demonstrate distinctiveness and complexity:
+
+- Nearest airport search: When filling out the travel profile form, after entering the user's location, an autocomplete is triggered. A call to the application API searches the city database for the closest match, then it shows suggestions for autocomplete. Once the user confirms the autocompleted location, another API call is triggered to search for the nearest airports based on the location's latitude and longitude.
+
+- Itinerary creation: LangChain templating is used to generate custom prompts for the ChatGPT API. It includes the destination, user's preferences and requirements, and an example of how the returned string should look. The ChatGPT API then returns a model itinerary for three days in a JSON format. However, ChatGPT is prone to leaving some quotes or commas. To solve this, I created error handling that uses another ChatGPT API call, feeding the incorrect JSON string and the error message describing the issue. This creates a sufficiently working combination of AI agents.
+
+- Setting up destination's suitability: After an Airport DB record is created, reciever triggers setting up of Airport's suitablity for all vacation types, such as "Beach Relax" or "City Tour". Suitability is a integer from 1-10. Another ChatGPT API call is used for obtaining this evaluation.
+
+- Getting beatiful images: Every itinerary should be ideally described visually with beatiful images, for this purpose generated itinerary includes a description of an image. Using this description, an image URL is fetched from Trip Advisor API.
 
 #### How to run the application:
 
@@ -21,6 +33,10 @@ AMADEUS_CLIENT_SECRET=O4DORD8RgfrTkCP5
 Furthermore it is necessary to use my sqlite DB for autocomplete to work properly.
 
 ### Application contents
+
+#### travel/urls.py
+
+8 django view endpoints and 5 API endpoints
 
 #### travel/models.py
 
@@ -76,6 +92,14 @@ Javascript functions linked to the travel profile form.
 - AutocompleteModule - Module for autocompletion of location input.
 - NearestAirportsModule - Module for fetching and displaying of nearest airports to location given in travel profile form.
 - other functions for displaying and validating of a travel form.
+
+#### travel/static/travel/styles.css
+
+CSS and SCSS styling
+
+#### travel/static/travel/templates
+
+All HTML templates used for django templating
 
 ### Application navigation
 

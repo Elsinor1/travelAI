@@ -188,7 +188,7 @@ def display_offer(request, offer_id):
 
 @login_required
 def travel_profile(request):
-    """Displays travel profile form throughprofiles are added or edited"""
+    """Displays travel profile form through which profiles are added or edited"""
     # Initial data
     travel_profiles = Travel_profile.objects.filter(owner=request.user)
     travel_profiles_json = json.dumps(
