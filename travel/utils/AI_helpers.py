@@ -4,7 +4,7 @@ from langchain_core.prompts import ChatPromptTemplate
 from langchain_openai import ChatOpenAI
 
 import re
-
+from dotenv import load_dotenv
 import json
 
 from travel.models import City, Travel_profile
@@ -18,6 +18,8 @@ def get_itinerary(
 ) -> str:
     """For given parameters generate a string of itinerary for each day.
     Returns a string in a JSON format"""
+    # Loads environment variables for API key
+    load_dotenv()
 
     prompt_text = """
       You are local guide in {city}, write an itinerary for {duration} day vacation with theme: {vacation_type}. Participants: {adults} adults and {children} children. 
@@ -119,11 +121,12 @@ def get_itinerary(
 
 
 def correct_json(json_str: str, error_message: str) -> str:
+    # Loads environment variables for API key
+    load_dotenv()
+
     prompt_text = """
       There's an error I need you to fix, error is on json: {json_str} error is: {error_message}"""
     prompt = ChatPromptTemplate.from_template(prompt_text)
-    # api_key =
-    api_key = "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"
     model = ChatOpenAI(model="gpt-3.5-turbo", openai_api_key=api_key)
     output_parser = StrOutputParser()
 
@@ -145,8 +148,6 @@ def get_suitability_from_ai(
       In the scale from 1 to 10, mark how city: {city} is for tourists and visitors suitable for this purpose {vacation_type}. Judge based on possible activities for this purpose near this city. Return only single number from 1 to 10. 
     """
     prompt = ChatPromptTemplate.from_template(prompt_text)
-    # api_key =
-    api_key = "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"
     model = ChatOpenAI(model="gpt-4-turbo", openai_api_key=api_key)
     output_parser = StrOutputParser()
 

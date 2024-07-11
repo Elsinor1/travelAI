@@ -29,6 +29,7 @@ from decimal import Decimal
 
 from datetime import date, timedelta, datetime
 from typing import List
+from dotenv import load_dotenv
 
 from travel.utils.trip_advisor import get_image_url_from_description
 from travel.utils.AI_helpers import get_itinerary
@@ -50,6 +51,10 @@ def get_matches(letters: str) -> list:
 
 def get_airport_data(iata_code: str) -> dict:
     """Get information about airport, city and country based on airport's iata_code"""
+    
+    # Amadeus API key
+    load_dotenv()
+
     amadeus_client = Client()
     try:
         response = amadeus_client.reference_data.locations.get(
@@ -176,6 +181,8 @@ def get_region(airport_data: dict) -> Region:
 def get_destinations_from_api(origin_iata: str) -> List[Airport]:
     """Gets possible destinations for origin airport iata using Amadeus API
     Returns list of Airport objects"""
+    # Amadeus API key
+    load_dotenv()
     amadeus = Client()
 
     print(f"Getting flight destinations from Amadeus API for origin: {origin_iata}")
@@ -401,9 +408,10 @@ def get_travel_offer(
 
 
 class FlightClass:
-    amadeus = Client()
-
+    """Class for handling flight data"""
     def __init__(self):
+        # Amadeus API key
+        load_dotenv()
         self.amadeus = Client()
 
     def get_flight_airport(self, iata_code: str) -> Airport:

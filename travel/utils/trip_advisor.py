@@ -1,4 +1,5 @@
 import requests
+from dotenv import load_dotenv
 
 from travel.models import Itinerary_image
 
@@ -12,10 +13,11 @@ def get_trip_adv_location_id(
                 category: string - Filters result set based on property type. Valid options are "hotels", "attractions", "restaurants", and "geos"
                 language - string, The language in which to return results (e.g. "en" for English or "es" for Spanish) from the list of our Supported Languages.
     """
+    
+    # Trip Advisor API key
+    load_dotenv()
 
     query = location_name.replace(" ", "%20")
-    # key = os.environ.get("TRIP_ADVISOR_API")
-    key = "0D4638701E3B4D858771E820BD81E285"
     url = f"https://api.content.tripadvisor.com/api/v1/location/search?key={key}&searchQuery={query}&category={category}&language={language}"
 
     headers = {"accept": "application/json"}
@@ -41,7 +43,9 @@ def get_image(location_id: str, image_size: str = "original", source: str = "") 
                 image_size - string, options: thumbnail, small, medium, large, original
                 source - string, A comma-separated list of allowed photo sources. Allowed values are 'Expert', 'Management', 'Traveler'. If not specified, allow photos from all sources.
     """
-    key = "0D4638701E3B4D858771E820BD81E285"
+    # Trip Advisor API key
+    load_dotenv()
+    
     language = "en"
     photos_amount = "1"
     url = f"https://api.content.tripadvisor.com/api/v1/location/{location_id}/photos?key={key}&language={language}&limit={photos_amount}"

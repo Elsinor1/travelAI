@@ -24,11 +24,7 @@ Key features of the application that demonstrate distinctiveness and complexity:
 
 #### How to run the application:
 
-In order to run this application you need to setup the environment variable for Amadeus API. You can use my test setup:
-
-AMADEUS_CLIENT_ID=SGVrXP6enprnQv4OU8K9mgo0EVUKMmzs
-
-AMADEUS_CLIENT_SECRET=O4DORD8RgfrTkCP5
+In order to run this application you need access APIs therefore you need to setup all environment variables in .env file.
 
 Furthermore it is necessary to use my sqlite DB for autocomplete to work properly.
 
