@@ -25,6 +25,10 @@ Key features of the application that demonstrate distinctiveness and complexity:
 #### How to run the application:
 
 In order to run this application you need access APIs therefore you need to setup all environment variables in .env file.
+OPENAI_API_KEY = ""
+AMADEUS_CLIENT_ID=  ""
+AMADEUS_CLIENT_SECRET = ""
+TRIP_ADVISOR_API = ""
 
 Furthermore it is necessary to use my sqlite DB for autocomplete to work properly.
 
